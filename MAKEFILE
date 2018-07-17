@@ -1,0 +1,34 @@
+# <Brandon Piper> 
+#
+# make EvalExpression - makes EvalExpression executable
+# make BinaryTreeDriver - makes BinaryTreeDriver executable
+# make clean - removes all object files
+# make spotless - removes all executables 
+# make clear - makes clean and spotless
+# make all - makes both executables and all object files
+
+EvalExpression : stack.o EvalExpression.o binarytree.o infonode.o
+	gcc -o EvalExpression stack.o EvalExpression.o binarytree.o infonode.o
+BinaryTreeDriver: binarytree.o BinaryTreeDriver.o infonode.o
+	gcc -o BinaryTreeDriver BinaryTreeDriver.o binarytree.o infonode.o
+
+all:
+	make EvalExpression BinaryTreeDriver
+EvalExpression.o : stack.h binarytree.h infonode.h
+	gcc -c -ansi -Wall EvalExpression.c
+BinaryTreeDriver.o : BinaryTreeDriver.c binarytree.h infonode.h
+	gcc -c -ansi -Wall BinaryTreeDriver.c
+infonode.o: infonode.h infonode.c
+	gcc -c -ansi -Wall infonode.c
+stack.o : stack.h stack.c
+	gcc -c -ansi -Wall stack.c
+binarytree.o : binarytree.h binarytree.c infonode.h
+	gcc -c -ansi -Wall binarytree.c
+
+spotless:
+	rm EvalExpression BinaryTreeDriver
+clean:
+	rm *.o
+clear:
+	make clean spotless
+	
